@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kategorie</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">📝 Notatnik</div>
+    <nav id="main-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="notes.html">Notatki</a></li>
+        <li><a href="categories.html" class="active">Kategorie</a></li>
+        <li><a href="about.html">Kontakt</a></li>
+      </ul>
+      <button id="nav-toggle">☰</button>
+    </nav>
+  </header>
+  <main class="columns-layout">
+    <section id="cat-personal">
+      <h2>Personalne</h2>
+      <div class="card-list" data-category="personal"></div>
+    </section>
+    <section id="cat-work">
+      <h2>Praca</h2>
+      <div class="card-list" data-category="work"></div>
+    </section>
+    <section id="cat-others">
+      <h2>Inne</h2>
+      <div class="card-list" data-category="others"></div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Notatnik App</p>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

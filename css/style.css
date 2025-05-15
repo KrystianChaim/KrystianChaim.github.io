@@ -1,0 +1,135 @@
+/* Sticky footer setup */
+html, body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: sans-serif;
+  line-height: 1.6;
+}
+header {
+  background: #333;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+footer {
+  background: #333;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+main {
+  flex: 1;
+  padding: 1rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+nav a {
+  color: #fff;
+  text-decoration: none;
+}
+nav a.active {
+  text-decoration: underline;
+}
+#nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.btn {
+  display: inline-block;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  background: #0066cc;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.btn-danger {
+  background: #cc0000;
+}
+
+/* Columns layout */
+.columns-layout {
+  display: grid;
+  gap: 1rem;
+}
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.card {
+  padding: 0.5rem;
+  background: #f4f4f4;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Responsive breakpoints */
+@media (min-width: 1024px) {
+  .columns-layout {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .columns-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+  .columns-layout section:last-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 767px) {
+  .columns-layout {
+    grid-template-columns: 1fr;
+  }
+  nav ul {
+    flex-direction: column;
+    display: none;
+  }
+  #nav-toggle {
+    display: inline;
+  }
+}
+
+/* notes layout */
+#notes-container {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  #notes-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  #notes-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

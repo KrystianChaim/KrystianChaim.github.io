@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notatka</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">📝 Notatnik</div>
+    <nav id="main-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="notes.html">Notatki</a></li>
+        <li><a href="categories.html">Kategorie</a></li>
+        <li><a href="about.html">Kontakt</a></li>
+      </ul>
+      <button id="nav-toggle">☰</button>
+    </nav>
+  </header>
+  <main>
+    <button id="back-btn" class="btn">❮ Wróć</button>
+
+    <label for="note-title">Tytuł notatki:</label>
+    <input type="text" id="note-title" />
+
+    <label for="note-category">Kategoria:</label>
+    <select id="note-category">
+      <option value="personal">Personalne</option>
+      <option value="work">Praca</option>
+      <option value="others">Inne</option>
+    </select>
+
+    <label for="note-content">Treść:</label>
+    <textarea id="note-content" rows="10"></textarea>
+
+    <button id="save-btn" class="btn">💾 Zapisz</button>
+    <button id="delete-btn" class="btn btn-danger">🗑️ Usuń</button>
+  </main>
+  <footer>
+    <p>&copy; 2025 Notatnik App</p>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+// Pobierz elementy po załadowaniu strony
 document.addEventListener('DOMContentLoaded', () => {
   const path = window.location.pathname.split('/').pop();
   switch (path) {
@@ -19,17 +20,17 @@ function initNav() {
   });
 }
 
-// notes.html: fetch z API jeśli lokalnie pusto
+// fetch z API
 async function initNotesPage() {
   initNav();
   const container = document.getElementById('notes-container');
   const filterEl = document.getElementById('filter');
   const addBtn = document.getElementById('add-btn');
 
-  // 1) pobierz lokalne notatki
+  // Pobierz lokalne notatki
   let notes = loadNotes();
 
-  // 2) jeśli pusto, fetch z JSONPlaceholder
+  // Jeśli nie ma lokalnych notatek, to załaduj je z linku
   if (notes.length === 0) {
     try {
       const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
@@ -47,7 +48,7 @@ async function initNotesPage() {
     }
   }
 
-  // funkcja renderująca
+  // Wyświetlanie notatek
   function render(list) {
     container.innerHTML = '';
     list.forEach(n => {
@@ -59,15 +60,15 @@ async function initNotesPage() {
     });
   }
 
-  // filtrowanie
+  // Filtrowanie notatek
   filterEl.addEventListener('input', e => {
     const q = e.target.value.toLowerCase();
     render(loadNotes().filter(n => n.title.toLowerCase().includes(q)));
   });
 
-  // dodawanie nowej notatki
+  // Dodawanie notatek
   addBtn.addEventListener('click', () => {
-    const id = Date.now();
+    const id = Date.now(); //id na podstawie daty
     addNote({
       id,
       title: 'Nowa notatka',
@@ -81,7 +82,7 @@ async function initNotesPage() {
   render(notes);
 }
 
-// note.html
+// Załaduj stronę z tworzeniem notatki
 function initNotePage() {
   initNav();
   const params = new URLSearchParams(window.location.search);
@@ -119,7 +120,7 @@ function initNotePage() {
   });
 }
 
-// categories.html
+// Załaduj stronę z kategoriami notatek
 function initCategoriesPage() {
   initNav();
   ['personal','work','others'].forEach(cat => {
@@ -136,13 +137,13 @@ function initCategoriesPage() {
   });
 }
 
-// about.html
+// Strona z formularzem
 function initAboutPage() {
   initNav();
   const form = document.getElementById('contact-form');
   form.addEventListener('submit', e => {
     e.preventDefault();
-    alert('Dziękuję za wiadomość!');
+    alert('Dziękuję za wiadomość! Chociaż nigdy nie dotrze!');
     form.reset();
   });
 }

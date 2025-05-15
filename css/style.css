@@ -1,4 +1,3 @@
-/* Sticky footer setup */
 html, body {
   height: 100%;
 }
@@ -23,11 +22,14 @@ header {
   padding: 1rem;
   text-align: center;
 }
+
+/* TODO stopka przy różnych rozdzielczościach lubi zmieniać rozmiary */
+
 footer {
   background: #333;
   color: #fff;
   padding: 1rem;
-  text-align: center;
+  text-align: left;
 }
 main {
   flex: 1;
@@ -35,7 +37,7 @@ main {
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
 }
 nav ul {
   list-style: none;
@@ -74,7 +76,7 @@ nav a.active {
   background: #cc0000;
 }
 
-/* Columns layout */
+/* Kolumny */
 .columns-layout {
   display: grid;
   gap: 1rem;
@@ -84,14 +86,21 @@ nav a.active {
   flex-direction: column;
   gap: 0.5rem;
 }
+/* Karty z notatkami */
 .card {
   padding: 0.5rem;
   background: #f4f4f4;
   border-radius: 4px;
   cursor: pointer;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+.card:hover {
+  background: #9c9a9a;
+  transition: 0.5s;
 }
 
-/* Responsive breakpoints */
+/* Responsywność zaczyna się tutaj */
 @media (min-width: 1024px) {
   .columns-layout {
     grid-template-columns: repeat(3, 1fr);
@@ -118,7 +127,7 @@ nav a.active {
   }
 }
 
-/* notes layout */
+/* Wygląd notatek */
 #notes-container {
   display: grid;
   gap: 1rem;

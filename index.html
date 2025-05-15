@@ -8,10 +8,10 @@
 </head>
 <body>
   <header>
-    <div class="logo">📝 Notatnik</div>
+    <div class="logo">Notatnik</div>
     <nav id="main-nav">
       <ul>
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html" class="active">Strona główna</a></li>
         <li><a href="notes.html">Notatki</a></li>
         <li><a href="categories.html">Kategorie</a></li>
         <li><a href="about.html">Kontakt</a></li>
@@ -20,12 +20,33 @@
     </nav>
   </header>
   <main>
-    <h1>Witaj w Notatniku!</h1>
-    <p>Prosta aplikacja do tworzenia, przeglądania i edycji notatek. Twoje notatki są przechowywane lokalnie lub pobierane z publicznego API.</p>
-    <a class="btn" href="notes.html">Przejdź do notatek</a>
+    <h1>Kilka słów o aplikacji</h1>
+    <br>
+    Projekt na przedmiot "Projektowanie Interfejsów Użytkownika II" przedstawia prostą aplikację,
+    <br>
+    wykonaną w technologiach <b>HTML, CSS i JavaScript</b>. Cała logika przechowywania danych oparta jest na <b>localStorage,</b>
+    <br>
+    Tym samym notatki są zapisywane w przeglądarce i dostępne przy kolejnych uruchomieniach bez potrzeby serwera.
+    <br>
+    Przy pierwszym wejściu do listy notatek aplikacja sprawdza, czy w local storage są już dane, jeśli nie to pobiera przykładowe
+    <br>
+    wpisy z publicznego API JSONPlaceholder za pomocą Fetch API.
+    <br>
+    <br>
+    Struktura projektu podzielona jest na pięć podstron: stronę główną, listę notatek, widok edycji pojedynczej notatki, widok kategorii oraz stronę kontaktową.
+    <br>
+    Layout tworzy responsywny układ z użyciem Flexbox i CSS Grid. Menu nawigacyjne obsługuje przełączanie w widoku mobilnym przez prosty toggle w JavaScript, który zmienia styl wyświetlania listy linków.
+    <br>
+    Każda notatka ma unikalne ID generowane na podstawie znacznika czasu, co upraszcza dodawanie, edytowanie i usuwanie.
+    <br>
+    Edycja notatki pozwala modyfikować tytuł, treść i kategorię, a zmiany natychmiast zapisywane są do localStorage, po naciśnięciu przycisku "Zapisz".
+    <br>
+    <br>
+    Widok kategorii filtruje notatki według trzech grup: personalne, praca oraz inne, pokazując je w siatkach wielokolumnowej (zależnej od rozmiaru ekranu).
+    <br>
   </main>
   <footer>
-    <p>&copy; 2025 Notatnik App</p>
+    <p>&copy; 2025 Krystian Chaim</p>
   </footer>
   <script src="js/script.js"></script>
 </body>

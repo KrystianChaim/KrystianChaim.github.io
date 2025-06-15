@@ -23,8 +23,6 @@ header {
   text-align: center;
 }
 
-/* TODO stopka przy różnych rozdzielczościach lubi zmieniać rozmiary */
-
 footer {
   background: #333;
   color: #fff;
@@ -143,9 +141,7 @@ nav a.active {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-/* ───── Form Controls ───── */
 
-/* Ogólne grupowanie etykieta + pole */
 main label {
   display: block;
   margin-bottom: 0.3rem;
@@ -153,7 +149,6 @@ main label {
   color: #333;
 }
 
-/* Wspólne dla inputów, selectów i textarea */
 main input[type="text"],
 main input[type="email"],
 main select,
@@ -172,7 +167,6 @@ main textarea {
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* Efekt po wejściu w fokus */
 main input:focus,
 main select:focus,
 main textarea:focus {
@@ -182,7 +176,6 @@ main textarea:focus {
   background: #fff;
 }
 
-/* Opcjonalnie: grupowanie formularza w wygodniejszy kontener */
 main form {
   max-width: 600px;
   margin: 0 auto 2rem;

@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Wspólne: menu mobilne
+// wspólne: menu mobilne
 function initNav() {
   const btn = document.getElementById('nav-toggle');
   const ul = document.querySelector('nav ul');
@@ -29,8 +29,10 @@ async function initNotesPage() {
   const clearBtn        = document.getElementById('clear-btn');
   const fetchBtn        = document.getElementById('fetch-btn');
 
-  // 1) Twoje początkowe notatki
+  // puste notatki
   const emptyNotes = [];
+
+  // początkowe notatki
   const initialNotes = [
       {
         id: Date.now(),
@@ -76,14 +78,14 @@ async function initNotesPage() {
       }
     ];
 
-  // 2) Zainicjuj storage jeśli pierwszy raz
+  // zainicjuj storage jeśli pierwszy raz
   if (!localStorage.getItem('initialized')) {
     saveNotes(initialNotes);
     localStorage.setItem('initialized', 'true');
   }
   let notes = loadNotes();
 
-  // 3) Render
+  // render
   function render(list) {
     container.innerHTML = '';
     list.forEach(n => {
@@ -95,34 +97,34 @@ async function initNotesPage() {
     });
   }
 
-  // 4) Filtr
+  // filtr
   filterEl.addEventListener('input', e => {
     const q = e.target.value.toLowerCase();
     render(loadNotes().filter(n => n.title.toLowerCase().includes(q)));
   });
 
-  // 5) Dodaj nową
+  // dodaj nową
   addBtn.addEventListener('click', () => {
     const id = Date.now();
     addNote({ id, title: 'Nowa notatka', content: '', category: 'others', createdAt: new Date().toISOString() });
     window.location.href = `note.html?id=${id}`;
   });
 
-  // 6) Wyczyść wszystkie (przywróć tylko initialNotes)
+  // wyczyść wszystkie (przywróć tylko initialNotes)
   clearBtn.addEventListener('click', () => {
     if (!confirm('Usunąć wszystkie notatki?')) return;
     saveNotes(emptyNotes);
     render(emptyNotes);
   });
 
-  // 6) Wyczyść wszystkie (przywróć tylko initialNotes)
+  // wyczyść wszystkie (przywróć tylko initialNotes)
   restoreBtn.addEventListener('click', () => {
     if (!confirm('Usunąć wszystkie notatki i przywrócić tylko 3 początkowe?')) return;
     saveNotes(initialNotes);
     render(initialNotes);
   });
 
-  // 7) Ponowny fetch z JSONPlaceholder (10 postów)
+  // ponowny fetch z JSONPlaceholder (10 postów)
   fetchBtn.addEventListener('click', async () => {
     try {
       const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
@@ -142,7 +144,7 @@ async function initNotesPage() {
     }
   });
 
-  // 8) Pierwotny render
+  // pierwotny render
   render(notes);
 }
 

@@ -1,4 +1,3 @@
-// Pobierz elementy po załadowaniu strony
 document.addEventListener('DOMContentLoaded', () => {
   const path = window.location.pathname.split('/').pop();
   switch (path) {
@@ -20,35 +19,71 @@ function initNav() {
   });
 }
 
-// fetch z API
+// notes.html
 async function initNotesPage() {
   initNav();
-  const container = document.getElementById('notes-container');
-  const filterEl = document.getElementById('filter');
-  const addBtn = document.getElementById('add-btn');
+  const container       = document.getElementById('notes-container');
+  const filterEl        = document.getElementById('filter');
+  const addBtn          = document.getElementById('add-btn');
+  const restoreBtn      = document.getElementById('restore-btn');
+  const clearBtn        = document.getElementById('clear-btn');
+  const fetchBtn        = document.getElementById('fetch-btn');
 
-  // Pobierz lokalne notatki
-  let notes = loadNotes();
-
-  // Jeśli nie ma lokalnych notatek, to załaduj je z linku
-  if (notes.length === 0) {
-    try {
-      const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
-      const posts = await res.json();
-      notes = posts.map(p => ({
-        id: p.id,
-        title: p.title,
-        content: p.body,
+  // 1) Twoje początkowe notatki
+  const emptyNotes = [];
+  const initialNotes = [
+      {
+        id: Date.now(),
+        title: 'Lista zakupów',
+        content: 'Żona informatyka wysyła go po zakupy:\n- Kup parówki, a jak będą jajka, to kup dziesięć.\nChłopina po wejściu do sklepu pyta:\n- Czy są jajka?\n- Tak - odpowiada sprzedawca.\n- To poproszę dziesięć parówek.\n',
+        category: 'personal',
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: Date.now() + 1,
+        title: 'Terminy egzaminów',
+        content: '10 czerwiec - Badania operacyjne\n13 czerwiec - Sieci komputerowe\n',
+        category: 'personal',
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: Date.now() + 2,
+        title: 'Etap I - Mockupy',
+        content: '- Utworzyć konto na Figmie\n- Utworzyć mockup dla wersji desktop\n- Utworzyć mockup dla wersji tablet\n- Utworzyć mockup dla wersji mobile\n',
+        category: 'work',
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: Date.now() + 3,
+        title: 'Etap II - Implementacja',
+        content: '- Stworzenie aplikacji\n- Dołączenie API\n- Przygotowanie responsywności stron\n',
+        category: 'work',
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: Date.now() + 4,
+        title: 'Etap III - Dokumentacja i testy',
+        content: '- Przygotowanie dokumentacji w Markdown\n- Testy aplikacji w przeglądarkach\n',
+        category: 'work',
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: Date.now() + 5,
+        title: 'Pomysły na bloga',
+        content: '- Artykuł o JavaScript\n- Recenzja książki UX\n- Tutorial Fetch API',
         category: 'others',
         createdAt: new Date().toISOString()
-      }));
-      saveNotes(notes);
-    } catch (e) {
-      console.error('Błąd pobierania z API:', e);
-    }
-  }
+      }
+    ];
 
-  // Wyświetlanie notatek
+  // 2) Zainicjuj storage jeśli pierwszy raz
+  if (!localStorage.getItem('initialized')) {
+    saveNotes(initialNotes);
+    localStorage.setItem('initialized', 'true');
+  }
+  let notes = loadNotes();
+
+  // 3) Render
   function render(list) {
     container.innerHTML = '';
     list.forEach(n => {
@@ -60,29 +95,59 @@ async function initNotesPage() {
     });
   }
 
-  // Filtrowanie notatek
+  // 4) Filtr
   filterEl.addEventListener('input', e => {
     const q = e.target.value.toLowerCase();
     render(loadNotes().filter(n => n.title.toLowerCase().includes(q)));
   });
 
-  // Dodawanie notatek
+  // 5) Dodaj nową
   addBtn.addEventListener('click', () => {
-    const id = Date.now(); //id na podstawie daty
-    addNote({
-      id,
-      title: 'Nowa notatka',
-      content: '',
-      category: 'others',
-      createdAt: new Date().toISOString()
-    });
+    const id = Date.now();
+    addNote({ id, title: 'Nowa notatka', content: '', category: 'others', createdAt: new Date().toISOString() });
     window.location.href = `note.html?id=${id}`;
   });
 
+  // 6) Wyczyść wszystkie (przywróć tylko initialNotes)
+  clearBtn.addEventListener('click', () => {
+    if (!confirm('Usunąć wszystkie notatki?')) return;
+    saveNotes(emptyNotes);
+    render(emptyNotes);
+  });
+
+  // 6) Wyczyść wszystkie (przywróć tylko initialNotes)
+  restoreBtn.addEventListener('click', () => {
+    if (!confirm('Usunąć wszystkie notatki i przywrócić tylko 3 początkowe?')) return;
+    saveNotes(initialNotes);
+    render(initialNotes);
+  });
+
+  // 7) Ponowny fetch z JSONPlaceholder (10 postów)
+  fetchBtn.addEventListener('click', async () => {
+    try {
+      const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
+      const posts = await res.json();
+      const apiNotes = posts.map(p => ({
+        id: p.id + 1000,  // unikamy kolizji z initialNotes
+        title: p.title,
+        content: p.body,
+        category: 'others',
+        createdAt: new Date().toISOString()
+      }));
+      saveNotes(apiNotes);
+      render(apiNotes);
+    } catch (e) {
+      alert('Błąd pobierania z API');
+      console.error(e);
+    }
+  });
+
+  // 8) Pierwotny render
   render(notes);
 }
 
-// Załaduj stronę z tworzeniem notatki
+
+// note.html
 function initNotePage() {
   initNav();
   const params = new URLSearchParams(window.location.search);
@@ -102,7 +167,6 @@ function initNotePage() {
   contentEl.value      = note.content;
 
   backBtn.addEventListener('click', () => history.back());
-
   saveBtn.addEventListener('click', () => {
     updateNote(id, {
       title:    titleInput.value,
@@ -111,7 +175,6 @@ function initNotePage() {
     });
     alert('Zapisano zmiany!');
   });
-
   deleteBtn.addEventListener('click', () => {
     if (confirm('Usunąć notatkę?')) {
       deleteNote(id);
@@ -120,7 +183,7 @@ function initNotePage() {
   });
 }
 
-// Załaduj stronę z kategoriami notatek
+// categories.html
 function initCategoriesPage() {
   initNav();
   ['personal','work','others'].forEach(cat => {
@@ -137,7 +200,7 @@ function initCategoriesPage() {
   });
 }
 
-// Strona z formularzem
+// about.html
 function initAboutPage() {
   initNav();
   const form = document.getElementById('contact-form');

@@ -2,53 +2,1269 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Notatnik - Strona Główna</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test z historii – Powstanie styczniowe i ziemie polskie po 1864 roku</title>
+  <!-- Czcionka Inter z Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Konfiguracja Tailwind CSS dla czcionki Inter
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
 </head>
-<body>
-  <header>
-    <div class="logo">Notatnik</div>
-    <nav id="main-nav">
-      <ul>
-        <li><a href="index.html" class="active">Strona główna</a></li>
-        <li><a href="notes.html">Notatki</a></li>
-        <li><a href="categories.html">Kategorie</a></li>
-        <li><a href="about.html">Kontakt</a></li>
-      </ul>
-      <button id="nav-toggle">☰</button>
-    </nav>
-  </header>
-  <main>
-    <h1>Kilka słów o aplikacji</h1>
-    <br>
-    Projekt na przedmiot "Projektowanie Interfejsów Użytkownika II" przedstawia prostą aplikację,
-    <br>
-    wykonaną w technologiach <b>HTML, CSS i JavaScript</b>. Cała logika przechowywania danych oparta jest na <b>localStorage,</b>
-    <br>
-    Tym samym notatki są zapisywane w przeglądarce i dostępne przy kolejnych uruchomieniach bez potrzeby serwera.
-    <br>
-    Przy pierwszym wejściu do listy notatek aplikacja sprawdza, czy w local storage są już dane, jeśli nie to wczytuje notatki domyślne  ręcznie wpisane przez autora.
-    <br>
-    Alternatywnie można również pobrać wpisy z publicznego API JSONPlaceholder za pomocą Fetch API.
-    <br>
-    <br>
-    Struktura projektu podzielona jest na pięć podstron: stronę główną, listę notatek, widok edycji pojedynczej notatki, widok kategorii oraz stronę kontaktową.
-    <br>
-    Layout tworzy responsywny układ z użyciem Flexbox i CSS Grid. Menu nawigacyjne obsługuje przełączanie w widoku mobilnym przez prosty toggle w JavaScript, który zmienia styl wyświetlania listy linków.
-    <br>
-    Każda notatka ma unikalne ID generowane na podstawie znacznika czasu, co upraszcza dodawanie, edytowanie i usuwanie.
-    <br>
-    Edycja notatki pozwala modyfikować tytuł, treść i kategorię, a zmiany natychmiast zapisywane są do localStorage, po naciśnięciu przycisku "Zapisz".
-    <br>
-    <br>
-    Widok kategorii filtruje notatki według trzech grup: personalne, praca oraz inne, pokazując je w siatkach wielokolumnowych (zależnych od rozmiaru ekranu).
-    <br>
-    Aby pobrać archiwum z projektem <b><a href="projekt.rar" download>kliknij tutaj</a></b>
+<body class="bg-stone-100 text-slate-800 font-sans min-h-screen flex flex-col justify-between antialiased selection:bg-rose-200 selection:text-rose-900">
+
+  <!-- Główny kontener aplikacji -->
+  <main class="w-full max-w-3xl mx-auto px-4 py-6 sm:py-10 flex-grow flex flex-col justify-center">
+
+    <!-- ==================== 1. EKRAN STARTOWY ==================== -->
+    <section id="start-screen" class="bg-white border border-stone-200 rounded-2xl shadow-xl shadow-stone-200/70 p-6 sm:p-10 transition-all">
+      <div class="flex items-center gap-2.5 mb-4">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-rose-100 text-rose-800">
+          Historia • Liceum
+        </span>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-stone-100 text-stone-700">
+          50 pytań (ABCD i Prawda/Fałsz)
+        </span>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
+        Test z historii – Powstanie styczniowe i ziemie polskie po 1864 roku
+      </h1>
+
+      <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-8">
+        Sprawdź swoją wiedzę z okresu od odwilży posewastopolskiej, przez działalność stronnictw Białych i Czerwonych, przebieg powstania styczniowego, aż po represje zaborców, pracę organiczną, tajne nauczanie, Kulturkampf i rugi pruskie.
+      </p>
+
+      <!-- Wybór trybu kolejności pytań -->
+      <div class="mb-8">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">
+          Wybierz kolejność pytań:
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5" role="radiogroup" aria-label="Kolejność pytań">
+          <!-- Opcja 1: Od początku -->
+          <label class="cursor-pointer block">
+            <input type="radio" name="order-mode" value="sequential" class="peer sr-only" checked>
+            <div class="h-full p-4 rounded-xl border-2 border-stone-200 bg-stone-50/60 hover:bg-stone-50 peer-checked:border-rose-700 peer-checked:bg-rose-50/60 transition-all flex items-start gap-3.5">
+              <div class="mt-0.5 w-9 h-9 rounded-lg bg-white border border-stone-200 flex items-center justify-center text-rose-700 shrink-0 shadow-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h10"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-bold text-slate-900 text-base">Od początku (po kolei)</div>
+                <div class="text-xs sm:text-sm text-slate-600 mt-0.5">Pytania ułożone chronologicznie i tematycznie od 1 do 50.</div>
+              </div>
+            </div>
+          </label>
+
+          <!-- Opcja 2: Losowa kolejność -->
+          <label class="cursor-pointer block">
+            <input type="radio" name="order-mode" value="random" class="peer sr-only">
+            <div class="h-full p-4 rounded-xl border-2 border-stone-200 bg-stone-50/60 hover:bg-stone-50 peer-checked:border-rose-700 peer-checked:bg-rose-50/60 transition-all flex items-start gap-3.5">
+              <div class="mt-0.5 w-9 h-9 rounded-lg bg-white border border-stone-200 flex items-center justify-center text-rose-700 shrink-0 shadow-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-bold text-slate-900 text-base">Losowa kolejność</div>
+                <div class="text-xs sm:text-sm text-slate-600 mt-0.5">Przetasowana kolejność wszystkich pytań i wariantów odpowiedzi.</div>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Przycisk startu -->
+      <button id="start-btn" type="button" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-rose-700 hover:bg-rose-800 active:scale-[0.99] text-white font-bold text-base sm:text-lg shadow-lg shadow-rose-700/25 transition-all cursor-pointer">
+        <span>Rozpocznij test</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        </svg>
+      </button>
+
+      <!-- Zakres zagadnień -->
+      <div class="mt-8 pt-6 border-t border-stone-200">
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">Zakres tematyczny pytań:</p>
+        <div class="flex flex-wrap gap-1.5 text-xs text-slate-600">
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Odwilż posewastopolska</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Towarzystwo Rolnicze (1858)</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Biali i Czerwoni</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Aleksander Wielopolski</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Branka</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Warszawska Szkoła Główna</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Uwłaszczenie chłopów</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">22 stycznia 1863</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Mierosławski i Bobrowski</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Wojna partyzancka i partie</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Bitwa pod Ignacewem</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Marian Langiewicz</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Żuawi śmierci</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Romuald Traugutt</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Józef Hauke-Bosak</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Ks. Stanisław Brzóska</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Rusyfikacja i trójlojalizm</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Praca organiczna i u podstaw</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Tajne komplety i Uniwersytet Latający</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Karol Marcinkowski</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Franciszek Stefczyk</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Kulturkampf</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Ustawa kagańcowa</span>
+          <span class="px-2.5 py-1 rounded-lg bg-stone-100">Rugi pruskie</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 2. EKRAN TESTU ==================== -->
+    <section id="quiz-screen" class="hidden space-y-4">
+      <!-- Górny pasek statystyk i sterowania -->
+      <div class="bg-white border border-stone-200 rounded-2xl shadow-md shadow-stone-200/50 p-4 sm:px-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <span class="inline-flex items-center px-3 py-1.5 rounded-xl bg-stone-100 text-slate-800 font-bold text-sm">
+              Pytanie <span id="current-q-num" class="mx-1 text-rose-700">1</span> / <span id="total-q-num" class="ml-1">50</span>
+            </span>
+            <span class="inline-flex items-center px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold text-sm">
+              Punkty: <span id="current-score" class="ml-1">0</span>
+            </span>
+          </div>
+
+          <button id="end-test-btn" type="button" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-stone-300 hover:border-rose-300 hover:bg-rose-50 text-slate-700 hover:text-rose-800 font-semibold text-xs sm:text-sm transition-colors cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+            <span>Zakończ test</span>
+          </button>
+        </div>
+
+        <!-- Pasek postępu -->
+        <div class="w-full h-2.5 bg-stone-200 rounded-full overflow-hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="2" id="progress-wrapper">
+          <div id="progress-bar" class="h-full bg-rose-700 rounded-full transition-all duration-300 ease-out" style="width: 2%;"></div>
+        </div>
+      </div>
+
+      <!-- Karta aktualnego pytania -->
+      <div class="bg-white border border-stone-200 rounded-2xl shadow-xl shadow-stone-200/70 p-6 sm:p-8">
+        <!-- Oznaczenie typu pytania oraz tematu -->
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <span id="question-type-badge" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-800 border border-indigo-200">
+            Pytanie ABCD
+          </span>
+          <span id="question-topic-badge" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-stone-100 text-stone-700">
+            Zagadnienie
+          </span>
+        </div>
+
+        <!-- Treść pytania -->
+        <h2 id="question-text" class="text-lg sm:text-xl font-bold text-slate-900 leading-relaxed mb-6">
+          Treść pytania...
+        </h2>
+
+        <!-- Kontener opcji odpowiedzi -->
+        <div id="options-container" class="space-y-3">
+          <!-- Przyciski odpowiedzi generowane dynamicznie przez JS -->
+        </div>
+
+        <!-- Wyjaśnienie historyczne po udzieleniu odpowiedzi -->
+        <div id="feedback-box" class="hidden mt-6 p-4 sm:p-5 rounded-xl border transition-all">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span id="feedback-icon"></span>
+            <h3 id="feedback-title" class="font-bold text-base"></h3>
+          </div>
+          <p id="explanation-text" class="text-sm sm:text-base text-slate-700 leading-relaxed"></p>
+        </div>
+
+        <!-- Przycisk przejścia dalej -->
+        <div id="next-container" class="hidden mt-6 pt-4 border-t border-stone-100 flex justify-end">
+          <button id="next-btn" type="button" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 active:scale-[0.99] text-white font-bold text-sm sm:text-base shadow-md transition-all cursor-pointer">
+            <span id="next-btn-text">Następne pytanie</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. EKRAN PODSUMOWANIA ==================== -->
+    <section id="summary-screen" class="hidden bg-white border border-stone-200 rounded-2xl shadow-xl shadow-stone-200/70 p-6 sm:p-10">
+      <div class="text-center max-w-xl mx-auto">
+        <div class="w-16 h-16 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center mx-auto mb-4 shadow-sm">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+          </svg>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2">
+          Podsumowanie testu
+        </h2>
+        <p id="summary-verdict" class="text-slate-600 text-sm sm:text-base mb-8">
+          Oto Twoje wyniki z rozwiązanej części testu.
+        </p>
+      </div>
+
+      <!-- Główne kafelki wyników -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div class="p-5 rounded-2xl bg-stone-50 border border-stone-200 text-center">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Liczba pytań</div>
+          <div id="summary-answered" class="text-3xl font-extrabold text-slate-900">0</div>
+          <div id="summary-total-info" class="text-xs text-slate-500 mt-1">z 50 dostępnych</div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-emerald-50/80 border border-emerald-200 text-center">
+          <div class="text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">Dobre odpowiedzi</div>
+          <div id="summary-correct" class="text-3xl font-extrabold text-emerald-800">0</div>
+          <div id="summary-wrong-info" class="text-xs text-emerald-700/80 mt-1">Błędne: 0</div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-rose-50/80 border border-rose-200 text-center">
+          <div class="text-xs font-bold uppercase tracking-wider text-rose-700 mb-1">Wynik procentowy</div>
+          <div id="summary-percent" class="text-3xl font-extrabold text-rose-800">0%</div>
+          <div class="text-xs text-rose-700/80 mt-1">skuteczność</div>
+        </div>
+      </div>
+
+      <!-- Przyciski akcji na ekranie końcowym -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+        <button id="restart-btn" type="button" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-rose-700 hover:bg-rose-800 active:scale-[0.99] text-white font-bold text-base shadow-lg shadow-rose-700/20 transition-all cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+          <span>Wróć na start / Rozwiąż ponownie</span>
+        </button>
+
+        <button id="toggle-review-btn" type="button" class="hidden w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-stone-300 hover:bg-stone-50 text-slate-800 font-semibold text-base transition-colors cursor-pointer">
+          <span>Pokaż przegląd odpowiedzi</span>
+        </button>
+      </div>
+
+      <!-- Szczegółowy przegląd udzielonych odpowiedzi -->
+      <div id="review-container" class="hidden mt-8 pt-6 border-t border-stone-200 space-y-4">
+        <h3 class="text-lg font-bold text-slate-900">Przegląd udzielonych odpowiedzi:</h3>
+        <div id="review-list" class="space-y-3 max-h-[28rem] overflow-y-auto pr-1">
+          <!-- Elementy przeglądu generowane dynamicznie -->
+        </div>
+      </div>
+    </section>
+
   </main>
-  <footer>
-    <p>&copy; 2025 Krystian Chaim</p>
+
+  <!-- Stopka informacyjna -->
+  <footer class="w-full max-w-3xl mx-auto px-4 py-4 text-center text-xs text-slate-400">
+    Interaktywny test powtórkowy z historii dla szkół ponadpodstawowych • Zakres: XIX wiek (1856–1908)
   </footer>
-  <script src="js/script.js"></script>
+
+  <script>
+    /**
+     * Baza 50 pytań historycznych (ABCD oraz Prawda/Fałsz) dla szkoły średniej.
+     * Obejmuje wszystkie zagadnienia od odwilży posewastopolskiej po rugi pruskie i ustawę kagańcową.
+     */
+    const QUESTIONS_BANK = [
+      {
+        id: 1,
+        type: 'abcd',
+        topic: 'Odwilż posewastopolska',
+        question: 'Co było bezpośrednią przyczyną tzw. odwilży posewastopolskiej w Imperium Rosyjskim po 1856 roku?',
+        options: [
+          'Wybuch powstania styczniowego i interwencja zbrojna Wielkiej Brytanii.',
+          'Klęska Rosji w wojnie krymskiej i śmierć cara Mikołaja I, po którym tron objął Aleksander II.',
+          'Podpisanie przez Rosję pokoju w Tylży oraz utworzenie Księstwa Warszawskiego.',
+          'Całkowite zniesienie pańszczyzny w Królestwie Polskim przez cara Mikołaja I.'
+        ],
+        correctIndex: 1,
+        explanation: 'Przegrana wojna krymska (zwłaszcza upadek twierdzy Sewastopol) obnażyła zacofanie Rosji. Nowy car Aleksander II złagodził kurs polityczny, ogłosił amnestię i zapowiedział reformy.'
+      },
+      {
+        id: 2,
+        type: 'tf',
+        topic: 'Odwilż posewastopolska',
+        question: 'W ramach odwilży posewastopolskiej car Aleksander II ogłosił amnestię dla części polskich zesłańców syberyjskich oraz złagodził cenzurę w Królestwie Polskim.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. Odwilż po 1856 roku przyniosła m.in. powrót części zesłańców, zniesienie stanu wojennego w Królestwie Polskim oraz otwarcie Akademii Medyko-Chirurgicznej w Warszawie.'
+      },
+      {
+        id: 3,
+        type: 'abcd',
+        topic: 'Towarzystwo Rolnicze (1858)',
+        question: 'Kto stanął na czele utworzonego w 1858 roku w Królestwie Polskim Towarzystwa Rolniczego?',
+        options: [
+          'Margrabia Aleksander Wielopolski',
+          'Generał Ludwik Mierosławski',
+          'Hrabia Andrzej Zamoyski',
+          'Ksiądz Stanisław Brzóska'
+        ],
+        correctIndex: 2,
+        explanation: 'Na czele Towarzystwa Rolniczego stał hrabia Andrzej Zamoyski. Organizacja skupiała ziemiaństwo i pełniła w praktyce rolę nieformalnej reprezentacji politycznej społeczeństwa.'
+      },
+      {
+        id: 4,
+        type: 'tf',
+        topic: 'Towarzystwo Rolnicze (1858)',
+        question: 'Towarzystwo Rolnicze zostało rozwiązane przez władze carskie w kwietniu 1861 roku z inicjatywy Aleksandra Wielopolskiego, ponieważ stało się ośrodkiem polskich aspiracji politycznych.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. Rosnący autorytet Towarzystwa Rolniczego zagrażał planom Wielopolskiego, dlatego w kwietniu 1861 r. organizacja została rozwiązana, co wywołało wielką manifestację w Warszawie.'
+      },
+      {
+        id: 5,
+        type: 'abcd',
+        topic: 'Biali i Czerwoni',
+        question: 'Który zestaw postulatów prawidłowo opisuje program stronnictwa „Czerwonych” przed wybuchem powstania styczniowego?',
+        options: [
+          'Oczynszowanie chłopów za odszkodowaniem i odłożenie walki zbrojnej na odległą przyszłość.',
+          'Pełna ugoda z carem Aleksandrem II w zamian za przywrócenie konstytucji z 1815 roku.',
+          'Przygotowanie szybkiego powstania zbrojnego przeciw Rosji oraz natychmiastowe uwłaszczenie chłopów.',
+          'Zwrócenie się o interwencję wojskową do Prus w zamian za rezygnację z Wielkopolski.'
+        ],
+        correctIndex: 2,
+        explanation: '„Czerwoni” (młoda inteligencja, studenci, rzemieślnicy) dążyli do wybuchu powstania narodowego oraz radykalnych reform społecznych, w tym bezwarunkowego uwłaszczenia chłopów.'
+      },
+      {
+        id: 6,
+        type: 'abcd',
+        topic: 'Biali i Czerwoni',
+        question: 'Jakie stanowisko w kwestii chłopskiej oraz walki o niepodległość zajmował obóz „Białych” przed styczniem 1863 roku?',
+        options: [
+          'Byli przeciwni natychmiastowemu powstaniu, stawiali na pracę organiczną i dyplomację, a dla chłopów postulowali oczynszowanie.',
+          'Domagali się natychmiastowego wybuchu powstania już w 1861 roku oraz podziału folwarków szlacheckich.',
+          'Wspierali przymusową brankę zarządzoną przez Aleksandra Wielopolskiego.',
+          'Opowiadali się za całkowitą rusyfikacją szkolnictwa w imię trójlojalizmu.'
+        ],
+        correctIndex: 0,
+        explanation: '„Biali” (ziemiaństwo, burżuazja) obawiali się rewolucji społecznej i nieprzygotowanego powstania; woleli pracę organiczną oraz stopniowe oczynszowanie chłopów.'
+      },
+      {
+        id: 7,
+        type: 'tf',
+        topic: 'Biali i Czerwoni',
+        question: 'Po wybuchu powstania styczniowego w 1863 roku stronnictwo „Białych” całkowicie zbojkotowało walki i odmówiło udziału we władzach powstańczych.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 1,
+        explanation: 'Fałsz. Choć „Biali” byli przeciwni wybuchowi powstania, wiosną 1863 roku przyłączyli się do niego, licząc na dyplomatyczną interwencję Francji i Wielkiej Brytanii na rzecz Polski.'
+      },
+      {
+        id: 8,
+        type: 'abcd',
+        topic: 'Aleksander Wielopolski',
+        question: 'Jakie stanowisko w administracji Królestwa Polskiego objął hrabia Aleksander Wielopolski w 1861 roku, co pozwoliło mu zreformować szkolnictwo?',
+        options: [
+          'Namiestnika Królestwa Polskiego z prawem dowodzenia armią carską.',
+          'Dyrektora Komisji Rządowej Wyznań Religijnych i Oświecenia Publicznego.',
+          'Prezesa Tymczasowego Rządu Narodowego w Warszawie.',
+          'Kuratora Warszawskiego Okręgu Naukowego w okresie nocy apuchtinowskiej.'
+        ],
+        correctIndex: 1,
+        explanation: 'W marcu 1861 roku Aleksander Wielopolski został dyrektorem Komisji Rządowej Wyznań Religijnych i Oświecenia Publicznego, rozpoczynając repolonizację szkół.'
+      },
+      {
+        id: 9,
+        type: 'abcd',
+        topic: 'Rząd Cywilny i Warszawska Szkoła Główna',
+        question: 'W 1862 roku car Aleksander II powołał Rząd Cywilny w Królestwie Polskim z Aleksandrem Wielopolskim jako naczelnikiem. Jakie ważne osiągnięcie edukacyjne wiąże się z jego reformą z 1862 roku?',
+        options: [
+          'Utworzenie tajnego Uniwersytetu Latającego dla polskich kobiet.',
+          'Powołanie Komisji Edukacji Narodowej nadzorującej szkoły w trzech zaborach.',
+          'Otwarcie polskiej uczelni wyższej – Warszawskiej Szkoły Głównej.',
+          'Wprowadzenie języka rosyjskiego jako jedynego języka wykładowego w gimnazjach.'
+        ],
+        correctIndex: 2,
+        explanation: 'W ramach reformy szkolnictwa z 1862 r. Wielopolski doprowadził do otwarcia Warszawskiej Szkoły Głównej – polskiej uczelni wyższej kształcącej elitę inteligencji (m.in. Bolesława Prusa i Henryka Sienkiewicza).'
+      },
+      {
+        id: 10,
+        type: 'tf',
+        topic: 'Aleksander Wielopolski i Rząd Cywilny',
+        question: 'Program polityczny Aleksandra Wielopolskiego zakładał rezygnację Polaków z powstań zbrojnych i ugodę z Rosją w zamian za przywrócenie Królestwu Polskiemu szerokiej autonomii.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. Wielopolski był konserwatystą i realistą politycznym: chciał osiągnąć polonizację administracji, sądownictwa i szkół poprzez lojalną współpracę z carem Aleksandrem II.'
+      },
+      {
+        id: 11,
+        type: 'abcd',
+        topic: 'Branka w carskiej Rosji',
+        question: 'Czym była tzw. branka zarządzona z inicjatywy Aleksandra Wielopolskiego w styczniu 1863 roku?',
+        options: [
+          'Masową konfiskatą majątków ziemskich należących do przywódców obozu „Białych”.',
+          'Nadzwyczajnym, imiennym poborem polskiej młodzieży konspiracyjnej do wieloletniej służby w armii rosyjskiej.',
+          'Przymusowym wysiedleniem ludności polskiej z ziem zaboru pruskiego do Królestwa Polskiego.',
+          'Specjalną kontrybucją finansową nałożoną na mieszkańców Warszawy po manifestacjach z 1861 roku.'
+        ],
+        correctIndex: 1,
+        explanation: 'Branka odbywała się nie drogą losowania, lecz według imiennych list przygotowanych przez policję. Miała rozbić organizację „Czerwonych” poprzez wcielenie młodych konspiratorów do carskiego wojska.'
+      },
+      {
+        id: 12,
+        type: 'tf',
+        topic: 'Branka w carskiej Rosji',
+        question: 'Przeprowadzenie branki w Warszawie w nocy z 14 na 15 stycznia 1863 roku przyspieszyło decyzję Komitetu Centralnego Narodowego o rozpoczęciu powstania styczniowego.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. Młodzież objęta spisami uciekała do lasów (m.in. do Puszczy Kampinoskiej), co zmusiło Komitet Centralny Narodowy do przyspieszenia wybuchu powstania na 22 stycznia 1863 r.'
+      },
+      {
+        id: 13,
+        type: 'abcd',
+        topic: 'Data powstania i Tymczasowy Rząd Narodowy',
+        question: 'Kiedy wybuchło powstanie styczniowe i jaki organ ogłosił wówczas manifest powstańczy?',
+        options: [
+          '29 listopada 1862 roku – manifest wydała Rada Administracyjna Królestwa Polskiego.',
+          '22 stycznia 1863 roku – manifest wydał Komitet Centralny Narodowy jako Tymczasowy Rząd Narodowy.',
+          '3 maja 1863 roku – manifest wydał Rząd Narodowy pod dyktaturą Romualda Traugutta.',
+          '15 sierpnia 1863 roku – manifest wydał Hotel Lambert w Paryżu.'
+        ],
+        correctIndex: 1,
+        explanation: 'Powstanie styczniowe wybuchło 22 stycznia 1863 roku. Tego dnia Komitet Centralny Narodowy ogłosił się Tymczasowym Rządem Narodowym i wydał manifest wzywający do walki oraz dekrety uwłaszczeniowe.'
+      },
+      {
+        id: 14,
+        type: 'abcd',
+        topic: 'Uwłaszczenie chłopów (dekret powstańczy)',
+        question: 'Co przewidywały dekrety uwłaszczeniowe wydane przez Tymczasowy Rząd Narodowy 22 stycznia 1863 roku?',
+        options: [
+          'Utrzymanie pańszczyzny do czasu zakończenia wojny z Imperium Rosyjskim.',
+          'Wprowadzenie wyłącznie oczynszowania chłopów w dobrach państwowych i kościelnych.',
+          'Nadanie chłopom na własność użytkowanej przez nich ziemi bez wykupu oraz przydział ziemi bezrolnym walczącym w powstaniu.',
+          'Przekazanie ziemi dworskiej chłopom pod warunkiem zapłacenia pełnej ceny rynkowej właścicielom ziemskim.'
+        ],
+        correctIndex: 2,
+        explanation: 'Dekrety z 22 stycznia 1863 r. znosiły pańszczyznę i czynsze, nadając chłopom ziemię na własność bezpłatnie (odszkodowanie ziemianom miało wypłacić w przyszłości niepodległe państwo polskie).'
+      },
+      {
+        id: 15,
+        type: 'tf',
+        topic: 'Uwłaszczenie chłopów',
+        question: 'Jednym z głównych celów ogłoszenia dekretów uwłaszczeniowych przez Tymczasowy Rząd Narodowy było pozyskanie chłopów do masowego udziału w powstaniu styczniowym.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. Przywódcy „Czerwonych” chcieli przełamać nieufność chłopów wobec szlachty i przekształcić powstanie w powszechną wojnę ludową.'
+      },
+      {
+        id: 16,
+        type: 'abcd',
+        topic: 'Ludwik Mierosławski i Stefan Bobrowski',
+        question: 'Kto został pierwszym dyktatorem powstania styczniowego (w lutym 1863 r.), a kto faktycznie kierował pracami Tymczasowego Rządu Narodowego w Warszawie w pierwszych miesiącach walk?',
+        options: [
+          'Pierwszym dyktatorem był Romuald Traugutt, a pracami w Warszawie kierował Andrzej Zamoyski.',
+          'Pierwszym dyktatorem był Józef Hauke-Bosak, a rządem w Warszawie kierował Aleksander Wielopolski.',
+          'Pierwszym dyktatorem był Ludwik Mierosławski, a faktycznym przywódcą Tymczasowego Rządu Narodowego w Warszawie był Stefan Bobrowski.',
+          'Pierwszym dyktatorem był Stanisław Brzóska, a w Warszawie rządem kierował Karol Marcinkowski.'
+        ],
+        correctIndex: 2,
+        explanation: 'Pierwszym dyktatorem powołanym przez „Czerwonych” był gen. Ludwik Mierosławski (po przegranych bitwach pod Krzywosądzem i Nową Wsią wrócił za granicę), natomiast w Warszawie kluczową rolę odgrywał utalentowany organizator Stefan Bobrowski.'
+      },
+      {
+        id: 17,
+        type: 'abcd',
+        topic: 'Wojna partyzancka i partie',
+        question: 'Dlaczego powstanie styczniowe przyjęło formę wojny partyzanckiej, a walczące oddziały nazywano „partiami”?',
+        options: [
+          'Ponieważ powstańcy dysponowali ciężką artylerią oblężniczą i regularnymi korpusami pancernymi.',
+          'Ze względu na ogromną przewagę liczebną i uzbrojenia regularnej armii rosyjskiej, przez co powstańcy unikali walnych bitew i atakowali z zaskoczenia.',
+          'Ponieważ nazwa „partie” oznaczała wyłącznie oddziały złożone z posłów do Sejmu Krajowego.',
+          'Ze względu na zakaz prowadzenia jakichkolwiek walk w lasach wydany przez Rząd Narodowy.'
+        ],
+        correctIndex: 1,
+        explanation: 'Powstańcy nie mieli regularnej armii, artylerii ani wyszkolonych rezerw, dlatego toczyli wojnę partyzancką – ruchome oddziały zwane „partiami” operowały w lasach i atakowały mniejsze garnizony rosyjskie.'
+      },
+      {
+        id: 18,
+        type: 'tf',
+        topic: 'Partie powstańcze',
+        question: '„Partiami” w okresie powstania styczniowego nazywano ruchome oddziały powstańcze liczące zazwyczaj od kilkudziesięciu do kilkuset słabo uzbrojonych ochotników.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. W trakcie całego powstania styczniowego stoczono ponad 1200 potyczek i bitew prowadzonych głównie przez kilkudziesięcio- lub kilkusetosobowe partie powstańcze.'
+      },
+      {
+        id: 19,
+        type: 'abcd',
+        topic: 'Marian Langiewicz',
+        question: 'Kto ogłosił się drugim dyktatorem powstania styczniowego w marcu 1863 roku (w obozie w Goszczy), odnosząc wcześniej sukcesy m.in. pod Małogoszczem i Grochowiskami?',
+        options: [
+          'Marian Langiewicz',
+          'Józef Bem',
+          'Ignacy Prądzyński',
+          'Henryk Dąbrowski'
+        ],
+        correctIndex: 0,
+        explanation: 'Generał Marian Langiewicz był jednym z najskuteczniejszych dowódców początku powstania. W marcu 1863 r. został dyktatorem, jednak po krwawej bitwie pod Grochowiskami przekroczył granicę galicyjską i został internowany przez Austriaków.'
+      },
+      {
+        id: 20,
+        type: 'abcd',
+        topic: 'Bitwa pod Ignacewem',
+        question: 'Czym w historii powstania styczniowego zapisała się bitwa pod Ignacewem stoczona w maju 1863 roku?',
+        options: [
+          'Była to jedna z najkrwawszych bitew powstania (w Wielkopolsce/na Kujawach), w której oddział Edmunda Taczanowskiego starł się z przeważającymi siłami rosyjskimi.',
+          'Było to decydujące zwycięstwo powstańców, które doprowadziło do zdobycia Cytadeli Warszawskiej.',
+          'Była to bitwa morska na Bałtyku stoczona przez flotę Rządu Narodowego.',
+          'Było to ostatnie starcie oddziału księdza Stanisława Brzóski w 1865 roku na Podlasiu.'
+        ],
+        correctIndex: 0,
+        explanation: '8 maja 1863 roku pod Ignacewem (niedaleko Konina) oddział płk. Edmunda Taczanowskiego stawił zacięty opór wielokrotnie silniejszym wojskom carskim; bitwa zakończyła się klęską i dużymi stratami powstańców.'
+      },
+      {
+        id: 21,
+        type: 'abcd',
+        topic: 'Żuawi śmierci',
+        question: 'Czym wyróżniał się elitarny oddział powstańczy zwany „żuawami śmierci”, zorganizowany przez Francuza François Rochebrune’a?',
+        options: [
+          'Składał się wyłącznie z chłopów uwłaszczonych przez cara Aleksandra II w 1864 roku.',
+          'Jego żołnierze przysięgali, że w bitwie nigdy nie cofną się ani nie poddadzą (zwyciężą lub zginą), a na czarnych mundurach nosili biały krzyż.',
+          'Była to tajna policja powstańcza tropiąca szpiegów carskich w Warszawie.',
+          'Był to oddział konnej artylerii przysłany oficjalnie przez cesarza Napoleona III.'
+        ],
+        correctIndex: 1,
+        explanation: '„Żuawi śmierci” wsławili się niezwykłą odwagą m.in. w bitwach pod Miechowem, Chrobrzem i Grochowiskami. Nosili czarne bluzy z białym krzyżem na piersi oraz czerwone fezy.'
+      },
+      {
+        id: 22,
+        type: 'tf',
+        topic: 'Żuawi śmierci',
+        question: 'Twórcą oddziału „żuawów śmierci” w powstaniu styczniowym był były francuski podoficer François Rochebrune, nawiązujący do tradycji francuskich elitarnych formacji kolonialnych.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. François Rochebrune służył wcześniej we francuskich oddziałach żuawów w Algierii i na Krymie, a w 1863 roku zorganizował w Ojcowie słynny oddział „żuawów śmierci”.'
+      },
+      {
+        id: 23,
+        type: 'abcd',
+        topic: 'Rząd Narodowy i Polskie Państwo Podziemne (XIX w.)',
+        question: 'Dlaczego struktury władz powstańczych z lat 1863–1864 określa się mianem XIX-wiecznego Polskiego Państwa Podziemnego?',
+        options: [
+          'Ponieważ wszystkie posiedzenia Rządu Narodowego odbywały się w podziemiach Zamku Królewskiego za zgodą cara.',
+          'Ponieważ mimo braku jawnej armii Rząd Narodowy sprawował w konspiracji realną władzę administracyjną, podatkową, pocztową, prasową i sądowniczą.',
+          'Ponieważ Rząd Narodowy został oficjalnie uznany przez Rosję, Prusy i Austrię za legalny rząd Polski.',
+          'Ponieważ walki powstańcze toczyły się wyłącznie w podziemnych kopalniach węgla i soli.'
+        ],
+        correctIndex: 1,
+        explanation: 'Rząd Narodowy posiadał własną pieczęć, tajną drukarnię, pocztę obywatelską, policję, sądownictwo i pobierał podatek narodowy, tworząc sprawny konspiracyjny aparat państwowy.'
+      },
+      {
+        id: 24,
+        type: 'abcd',
+        topic: 'Romuald Traugutt',
+        question: 'Jakie działania podjął Romuald Traugutt po objęciu funkcji dyktatora powstania styczniowego w październiku 1863 roku?',
+        options: [
+          'Podpisał akt kapitulacji powstania i rozwiązał Rząd Narodowy.',
+          'Zreorganizował luźne partie powstańcze w regularne korpusy, zaostrzył dyscyplinę i dążył do egzekwowania dekretu o uwłaszczeniu chłopów.',
+          'Przeniósł siedzibę Rządu Narodowego z Warszawy do Paryża i nakazał przerwanie walk.',
+          'Unieważnił dekret uwłaszczeniowy z 22 stycznia 1863 roku, aby zyskać poparcie rosyjskich konserwatystów.'
+        ],
+        correctIndex: 1,
+        explanation: 'Romuald Traugutt scentralizował władzę, przekształcił luźne partie w regularne oddziały (korpusy) i nakazał bezwzględne przestrzeganie dekretu uwłaszczeniowego, aby utrzymać powstanie do wiosny 1864 r.'
+      },
+      {
+        id: 25,
+        type: 'abcd',
+        topic: 'Józef Hauke-Bosak',
+        question: 'Kim był generał Józef Hauke-Bosak w okresie powstania styczniowego?',
+        options: [
+          'Carskim generał-gubernatorem wileńskim, który krwawo tłumił powstanie na Litwie.',
+          'Prezesem Towarzystwa Rolniczego i zwolennikiem ugody z Wielopolskim.',
+          'Jednym z najzdolniejszych dowódców powstańczych, mianowanym przez Traugutta naczelnikiem sił zbrojnych województw krakowskiego i sandomierskiego.',
+          'Założycielem spółdzielczych kas oszczędnościowo-pożyczkowych w Galicji.'
+        ],
+        correctIndex: 2,
+        explanation: 'Gen. Józef Hauke-Bosak dowodził II Korpusem (województwa krakowskie i sandomierskie), odnosząc sukcesy w Górach Świętokrzyskich (m.in. pod Opatowem i Ociesękami).'
+      },
+      {
+        id: 26,
+        type: 'tf',
+        topic: 'Romuald Traugutt',
+        question: 'Romuald Traugutt został aresztowany przez policję carską w kwietniu 1864 roku i stracony w sierpniu 1864 roku na stokach Cytadeli Warszawskiej wraz z czterema innymi członkami Rządu Narodowego.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. 5 sierpnia 1864 roku na stokach Cytadeli Warszawskiej stracono Romualda Traugutta oraz Rafała Krajewskiego, Józefa Toczyskiego, Romana Żulińskiego i Jana Jeziorańskiego.'
+      },
+      {
+        id: 27,
+        type: 'abcd',
+        topic: 'Ukaz o uwłaszczeniu z marca 1864 roku',
+        question: 'W jakim celu car Aleksander II wydał w marcu 1864 roku ukaz o uwłaszczeniu chłopów w Królestwie Polskim?',
+        options: [
+          'Aby ostatecznie odciągnąć chłopów od powstania styczniowego i przekonać ich, że ziemię otrzymują z łaski cara, a nie od polskiego Rządu Narodowego.',
+          'Aby ukarać chłopów za poparcie powstania poprzez odebranie im ziemi i przywrócenie pańszczyzny.',
+          'Aby zrealizować program oczynszowania zaproponowany przez Towarzystwo Rolnicze w 1858 roku.',
+          'Aby zachęcić chłopów z zaboru pruskiego do emigracji na Syberię.'
+        ],
+        correctIndex: 0,
+        explanation: 'Ukaz carski z 2 marca 1864 r. potwierdzał w dużej mierze stan wprowadzony przez dekret powstańczy, ale miał na celu pozyskanie chłopów przez carat i uderzenie ekonomiczne w polską szlachtę.'
+      },
+      {
+        id: 28,
+        type: 'abcd',
+        topic: 'Ksiądz Stanisław Brzóska',
+        question: 'Z czego zasłynął ksiądz generał Stanisław Brzóska w historii powstania styczniowego?',
+        options: [
+          'Był pierwszym dyktatorem powstania styczniowego w styczniu 1863 roku.',
+          'Dowodził najdłużej walczącym oddziałem powstańczym na Podlasiu (aż do wiosny 1865 roku) i był jednym z ostatnich straconych dowódców powstania.',
+          'Założył Warszawską Szkołę Główną we współpracy z Aleksandrem Wielopolskim.',
+          'Kierował obroną Poznańskiego Bazaru podczas rugów pruskich.'
+        ],
+        correctIndex: 1,
+        explanation: 'Ks. Stanisław Brzóska (naczelny kapelan powstania) wraz ze swoim adiutantem Franciszkiem Wilczyńskim walczył na Podlasiu aż do kwietnia 1865 r.; został stracony 23 maja 1865 r. w Sokołowie Podlaskim.'
+      },
+      {
+        id: 29,
+        type: 'tf',
+        topic: 'Ksiądz Stanisław Brzóska',
+        question: 'Oddział księdza Stanisława Brzóski złożył broń natychmiast po wybuchu powstania w styczniu 1863 roku i nie uczestniczył w walkach partyzanckich.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 1,
+        explanation: 'Fałsz. Ksiądz Stanisław Brzóska walczył od pierwszego dnia powstania (atak na Łuków 22 stycznia 1863 r.) aż do wiosny 1865 roku jako dowódca najdłużej walczącego oddziału powstańczego.'
+      },
+      {
+        id: 30,
+        type: 'abcd',
+        topic: 'Likwidacja odrębności Królestwa Polskiego',
+        question: 'Jaką nieoficjalną, lecz powszechnie stosowaną przez urzędników carskich nazwę zaczęto nadawać ziemiom dawnego Królestwa Polskiego po likwidacji jego odrębności ustrojowej po 1864 roku?',
+        options: [
+          'Wielkie Księstwo Poznańskie',
+          'Królestwo Galicji i Lodomerii',
+          'Kraj Przywiślański',
+          'Rzeczpospolita Krakowska'
+        ],
+        correctIndex: 2,
+        explanation: 'Po upadku powstania zlikwidowano odrębne urzędy centralne Królestwa Polskiego (Radę Stanu, Radę Administracyjną, komisje rządowe), a jego terytorium zaczęto nazywać Krajem Przywiślańskim.'
+      },
+      {
+        id: 31,
+        type: 'abcd',
+        topic: 'Reperkusje po powstaniu styczniowym',
+        question: 'Które z poniższych działań NIE należało do carskich represji po upadku powstania styczniowego?',
+        options: [
+          'Masowe zsyłki kilkudziesięciu tysięcy powstańców na Syberię oraz konfiskata majątków szlacheckich.',
+          'Kasata większości klasztorów katolickich i ograniczenie praw Kościoła katolickiego.',
+          'Utworzenie autonomicznego Sejmu Krajowego w Warszawie oraz przywrócenie polskiej armii.',
+          'Zastąpienie polskich urzędników Rosjanami i wprowadzenie języka rosyjskiego jako urzędowego.'
+        ],
+        correctIndex: 2,
+        explanation: 'Po powstaniu styczniowym nie tylko nie utworzono polskiego sejmu ani armii, lecz całkowicie zlikwidowano resztki autonomii Królestwa Polskiego, wprowadzając brutalną rusyfikację.'
+      },
+      {
+        id: 32,
+        type: 'abcd',
+        topic: 'Rusyfikacja',
+        question: 'Na czym polegała polityka rusyfikacji prowadzona w zaborze rosyjskim po upadku powstania styczniowego?',
+        options: [
+          'Na narzucaniu języka rosyjskiego, kultury rosyjskiej i prawosławia oraz usuwaniu języka polskiego ze szkół, urzędów i sądów.',
+          'Na przymusowym wysiedleniu wszystkich Polaków z Królestwa Polskiego do Prus Wschodnich.',
+          'Na zakazie używania języka rosyjskiego w administracji państwowej i na uniwersytetach.',
+          'Na wprowadzeniu dwujęzycznego polsko-rosyjskiego szkolnictwa w całej Europie Wschodniej.'
+        ],
+        correctIndex: 0,
+        explanation: 'Rusyfikacja obejmowała m.in. przekształcenie w 1869 r. Warszawskiej Szkoły Głównej w rosyjski Cesarski Uniwersytet Warszawski oraz usunięcie języka polskiego jako wykładowego ze wszystkich szkół.'
+      },
+      {
+        id: 33,
+        type: 'tf',
+        topic: 'Rusyfikacja',
+        question: 'W okresie tzw. nocy apuchtinowskiej (od nazwiska kuratora Aleksandra Apuchtina) w szkołach Królestwa Polskiego uczniom zabraniano rozmawiać po polsku nawet na przerwach pod groźbą surowych kar.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. Aleksander Apuchtin (kurator w latach 1879–1897) stworzył w szkołach system donosicielstwa, rewizji i surowych kar za używanie języka polskiego oraz czytanie polskiej literatury.'
+      },
+      {
+        id: 34,
+        type: 'abcd',
+        topic: 'Trójlojalizm',
+        question: 'Czym był „trójlojalizm” jako postawa polityczna części polskich środowisk konserwatywnych w drugiej połowie XIX wieku?',
+        options: [
+          'Tajnym porozumieniem trzech stronnictw niepodległościowych przygotowujących wspólne powstanie w trzech zaborach.',
+          'Poglądem zakładającym rezygnację z walki zbrojnej i przyjęcie postawy lojalnej wobec wszystkich trzech monarchów zaborczych (Rosji, Prus i Austrii).',
+          'Zasadą mówiącą, że każdy Polak powinien odbyć służbę wojskową w armiach wszystkich trzech zaborców.',
+          'Programem odrodzenia Rzeczypospolitej Trojga Narodów (Polski, Litwy i Rusi) w granicach przedrozbiorowych.'
+        ],
+        correctIndex: 1,
+        explanation: 'Trójlojalizm zakładał wyrzeczenie się powstań i okazywanie wierności władcom państw zaborczych (np. carowi, cesarzowi Austrii i cesarzowi Niemiec) w zamian za spokój i możliwość rozwoju gospodarczego.'
+      },
+      {
+        id: 35,
+        type: 'tf',
+        topic: 'Postawa lojalistyczna',
+        question: 'Przykładem postawy lojalistycznej wobec zaborcy była słynna uchwała Sejmu Krajowego we Lwowie z 1866 roku skierowana do cesarza Franciszka Józefa I ze słowami: „Przy Tobie, Najjaśniejszy Panie, stoimy i stać chcemy”.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. Galicyjscy konserwatyści (stańczycy) złożyli adres wiernopoddańczy cesarzowi Austrii, co przyczyniło się do uzyskania przez Galicję szerokiej autonomii w ramach monarchii austro-węgierskiej.'
+      },
+      {
+        id: 36,
+        type: 'abcd',
+        topic: 'Praca organiczna',
+        question: 'Na czym polegała koncepcja „pracy organicznej” rozwijana na ziemiach polskich w XIX wieku (szczególnie w okresie pozytywizmu)?',
+        options: [
+          'Na traktowaniu społeczeństwa jak jednego organizmu i wzmacnianiu go poprzez rozwój gospodarki, przemysłu, rolnictwa, handlu, nauki i oświaty zamiast walki zbrojnej.',
+          'Na tworzeniu tajnych oddziałów leśnych prowadzących nieustanną wojnę partyzancką z zaborcami.',
+          'Na masowej emigracji polskiej inteligencji do Ameryki Północnej w celu zakładania nowych osad.',
+          'Na bojkotowaniu nowoczesnych wynalazków, banków oraz linii kolejowych na ziemiach polskich.'
+        ],
+        correctIndex: 0,
+        explanation: 'Praca organiczna zakładała, że przetrwanie narodu pozbawionego państwa zależy od jego siły ekonomicznej, cywilizacyjnej i kulturalnej, a nie od kolejnych zrywów zbrojnych.'
+      },
+      {
+        id: 37,
+        type: 'abcd',
+        topic: 'Praca u podstaw',
+        question: 'Czym wyróżniała się „praca u podstaw” jako ważny element programu polskich pozytywistów?',
+        options: [
+          'Skupiała się na podnoszeniu poziomu oświaty, higieny, świadomości narodowej i warunków bytu najniższych warstw społecznych – głównie chłopów i robotników.',
+          'Dotyczyła wyłącznie budowania wielkich banków i spółek akcyjnych przez najbogatszą arystokrację.',
+          'Polegała na wysyłaniu petycji dyplomatycznych do rządów Francji i Wielkiej Brytanii.',
+          'Oznaczała naukę języków państw zaborczych w celu obejmowania wysokich stanowisk w Petersburgu i Berlinie.'
+        ],
+        correctIndex: 0,
+        explanation: 'Praca u podstaw miała włączyć w obręb nowoczesnego narodu miliony niedawno uwłaszczonych chłopów oraz robotników poprzez edukację elementarną, czytelnictwo i kółka rolnicze.'
+      },
+      {
+        id: 38,
+        type: 'tf',
+        topic: 'Praca u podstaw',
+        question: 'W ramach pracy u podstaw polscy społecznicy, nauczyciele i pisarze zakładali szkółki wiejskie, biblioteczki ludowe oraz wydawali tanie czasopisma i elementarze dla ludu.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. Zwalczanie analfabetyzmu na wsi i budowanie świadomości obywatelskiej wśród ludu stanowiły fundament pozytywistycznej pracy u podstaw.'
+      },
+      {
+        id: 39,
+        type: 'abcd',
+        topic: 'Tajne komplety',
+        question: 'Czym były „tajne komplety” organizowane w zaborze rosyjskim po upadku powstania styczniowego?',
+        options: [
+          'Konspiracyjnymi zajęciami szkolnymi w prywatnych mieszkaniach, na których uczono historii Polski, literatury i języka polskiego wbrew carskim zakazom.',
+          'Tajnymi magazynami broni i amunicji przygotowywanymi przez Rząd Narodowy w Puszczy Kampinoskiej.',
+          'Oficjalnymi podręcznikami zatwierdzonymi przez kuratora Aleksandra Apuchtina.',
+          'Specjalnymi oddziałami wojskowymi działającymi w zaborze austriackim.'
+        ],
+        correctIndex: 0,
+        explanation: 'Wobec rusyfikacji szkół publicznych tajne komplety (prowadzone m.in. przez nauczycielki nazywane „siłaczkami”) pozwalały młodzieży poznawać zakazaną historię i literaturę ojczystą.'
+      },
+      {
+        id: 40,
+        type: 'abcd',
+        topic: 'Uniwersytet Latający',
+        question: 'Dlaczego tajna wyższa uczelnia dla kobiet założona w Warszawie w 1885 roku nosiła nazwę „Uniwersytet Latający”?',
+        options: [
+          'Ponieważ wykłady odbywały się w konspiracji i często zmieniały miejsce (prywatne mieszkania), aby zmylić carską policję.',
+          'Ponieważ wykładowcy przemieszczali się balonami między Warszawą a Krakowem.',
+          'Ponieważ zajęcia prowadzono wyłącznie w czasie wakacji letnich na świeżym powietrzu.',
+          'Ponieważ była to pierwsza szkoła kształcąca konstruktorów statków powietrznych.'
+        ],
+        correctIndex: 0,
+        explanation: 'Uniwersytet Latający (zainicjowany m.in. przez Jadwigę Szczawińską-Dawidową) nie miał stałej siedziby – dla bezpieczeństwa przed carską Ochraną wykłady odbywały się w różnych prywatnych mieszkaniach.'
+      },
+      {
+        id: 41,
+        type: 'tf',
+        topic: 'Uniwersytet Latający',
+        question: 'Uniwersytet Latający dawał polskim kobietom możliwość zdobywania wyższego wykształcenia (gdyż carskie uniwersytety nie przyjmowały kobiet), a jedną z jego słynnych słuchaczek była Maria Skłodowska-Curie.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. Maria Skłodowska (późniejsza dwukrotna noblistka) uczęszczała na wykłady Uniwersytetu Latającego w Warszawie przed wyjazdem na studia na paryską Sorbonę.'
+      },
+      {
+        id: 42,
+        type: 'abcd',
+        topic: 'Karol Marcinkowski – Poznański Bazar',
+        question: 'Jaką rolę w rozwoju polskiej pracy organicznej w Wielkopolsce odegrał lekarz i społecznik Karol Marcinkowski?',
+        options: [
+          'Zainicjował budowę Poznańskiego Bazaru – ośrodka polskiego handlu, rzemiosła i życia narodowego – oraz założył Towarzystwo Naukowej Pomocy.',
+          'Dowodził oddziałem powstańczym w bitwie pod Ignacewem w maju 1863 roku.',
+          'Założył pierwsze w Galicji wiejskie kasy oszczędnościowo-pożyczkowe.',
+          'Kierował pruską Komisją Kolonizacyjną wykupującą ziemię w Wielkopolsce.'
+        ],
+        correctIndex: 0,
+        explanation: 'Karol Marcinkowski był pionierem pracy organicznej w zaborze pruskim. Otwarty w 1841 r. Poznański Bazar stał się centrum polskiego kupiectwa, bankowości i działalności społecznej w Poznaniu.'
+      },
+      {
+        id: 43,
+        type: 'abcd',
+        topic: 'Franciszek Stefczyk',
+        question: 'Z jaką działalnością gospodarczą w Galicji (zaborze austriackim) na stałe zapisało się nazwisko Franciszka Stefczyka?',
+        options: [
+          'Z budową Poznańskiego Bazaru jako centrum polskiego handlu w Wielkopolsce.',
+          'Z organizowaniem wiejskich spółdzielni oszczędnościowo-pożyczkowych (Kas Stefczyka), które chroniły chłopów przed lichwą.',
+          'Z kierowaniem Komisją Rządową Wyznań Religijnych i Oświecenia Publicznego w Warszawie.',
+          'Z utworzeniem oddziału „żuawów śmierci” w czasie powstania styczniowego.'
+        ],
+        correctIndex: 1,
+        explanation: 'Franciszek Stefczyk założył w 1890 r. w Czernichowie pod Krakowem pierwszą spółdzielczą kasę oszczędnościowo-pożyczkową, dając początek sieci tzw. Kas Stefczyka wspierających galicyjską wieś.'
+      },
+      {
+        id: 44,
+        type: 'abcd',
+        topic: 'Kulturkampf',
+        question: 'Co oznacza pojęcie „Kulturkampf” (walka o kulturę) w historii Niemiec i zaboru pruskiego w latach 70. XIX wieku?',
+        options: [
+          'Politykę kanclerza Ottona von Bismarcka wymierzoną w Kościół katolicki, która w zaborze pruskim splotła się z brutalną germanizacją Polaków.',
+          'Akcję polskich społeczników mającą na celu budowę muzeów i teatrów w Wielkopolsce.',
+          'Program współpracy kulturalnej między Polakami a Niemcami zainicjowany przez Karola Marcinkowskiego.',
+          'Ustawę wprowadzającą język polski jako urzędowy w całym Cesarstwie Niemieckim.'
+        ],
+        correctIndex: 0,
+        explanation: 'Kulturkampf był walką rządu Bismarcka o podporządkowanie Kościoła katolickiego państwu; w zaborze pruskim uderzył bezpośrednio w polskość, gdyż Kościół był ostoją języka i tradycji narodowej.'
+      },
+      {
+        id: 45,
+        type: 'tf',
+        topic: 'Kulturkampf',
+        question: 'W okresie Kulturkampfu władze pruskie usunęły język polski ze szkół (pozostawiając go początkowo jedynie na lekcjach religii w najniższych klasach), a prymas Polski abp Mieczysław Ledóchowski został uwięziony.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. Za opór wobec ustaw Kulturkampfu prymas Mieczysław Ledóchowski spędził dwa lata w pruskim więzieniu w Ostrowie Wielkopolskim (1874–1876).'
+      },
+      {
+        id: 46,
+        type: 'abcd',
+        topic: 'Rugi pruskie',
+        question: 'Czym były tzw. rugi pruskie przeprowadzone przez władze Cesarstwa Niemieckiego w latach 1885–1887?',
+        options: [
+          'Przymusowym wydaleniem z terytorium Niemiec około 26 tysięcy Polaków i Żydów nieposiadających obywatelstwa pruskiego (poddanych rosyjskich i austriackich).',
+          'Konfiskatą wszystkich polskich bibliotek i księgarń w Poznaniu i Gdańsku.',
+          'Zakazem stawiania domów mieszkalnych na gruntach nabytych przez polskich chłopów.',
+          'Specjalnym podatkiem nakładanym na polskich robotników pracujących w Zagłębiu Ruhry.'
+        ],
+        correctIndex: 0,
+        explanation: 'Rugi pruskie były masowymi wysiedleniami z prowincji wschodnich Rzeszy ludności polskiej i żydowskiej bez obywatelstwa pruskiego, mającymi osłabić żywioł polski w zaborze pruskim.'
+      },
+      {
+        id: 47,
+        type: 'tf',
+        topic: 'Rugi pruskie',
+        question: 'Celem rugów pruskich było zwiększenie odsetka ludności polskiej w Wielkopolsce i na Pomorzu poprzez sprowadzanie robotników rolnych z Królestwa Polskiego.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 1,
+        explanation: 'Fałsz. Rugi pruskie miały dokładnie odwrotny cel: chodziło o przymusowe usunięcie około 26 tysięcy Polaków i Żydów z państwa pruskiego i zahamowanie napływu ludności polskiej.'
+      },
+      {
+        id: 48,
+        type: 'abcd',
+        topic: 'Ustawa kagańcowa (1908)',
+        question: 'Co wprowadzała uchwalona w 1908 roku w Cesarstwie Niemieckim tzw. ustawa kagańcowa (paragraf językowy ustawy o stowarzyszeniach)?',
+        options: [
+          'Zakaz używania języka polskiego na publicznych zebraniach w miejscowościach, w których ludność polska stanowiła mniej niż 60% mieszkańców.',
+          'Całkowity zakaz wydawania polskich książek i czasopism we wszystkich trzech zaborach.',
+          'Nakaz zamykania polskich sklepów i banków spółdzielczych w Wielkopolsce.',
+          'Obowiązek składania przysięgi wierności carowi przez wszystkich nauczycieli szkół ludowych.'
+        ],
+        correctIndex: 0,
+        explanation: 'Paragraf językowy ustawy o stowarzyszeniach z 1908 r. (zwany ustawą kagańcową) zakazywał przemawiania po polsku na publicznych zgromadzeniach w powiatach, gdzie Polacy stanowili poniżej 60% ludności (np. w Poznaniu czy na Górnym Śląsku).'
+      },
+      {
+        id: 49,
+        type: 'tf',
+        topic: 'Ustawa kagańcowa (1908)',
+        question: 'Polacy potocznie nazywali przepisy z 1908 roku „ustawą kagańcową”, ponieważ w praktyce uniemożliwiały one swobodne prowadzenie publicznej debaty w języku polskim w dużych miastach zaboru pruskiego.',
+        options: ['Prawda', 'Fałsz'],
+        correctIndex: 0,
+        explanation: 'Prawda. Nazwa „ustawa kagańcowa” trafnie oddawała charakter przepisu, który „zakładał kaganiec” polskim działaczom społecznym i politycznym na wiecach i zebraniach.'
+      },
+      {
+        id: 50,
+        type: 'abcd',
+        topic: 'Podsumowanie epoki',
+        question: 'Które zestawienie prawidłowo łączy postać historyczną z obszarem jej działalności?',
+        options: [
+          'Andrzej Zamoyski – Uniwersytet Latający; Romuald Traugutt – Towarzystwo Rolnicze; Franciszek Stefczyk – żuawi śmierci.',
+          'Stanisław Brzóska – Kasy Stefczyka; Marian Langiewicz – Poznański Bazar; Ludwik Mierosławski – ustawa kagańcowa.',
+          'Karol Marcinkowski – Poznański Bazar; Franciszek Stefczyk – spółdzielcze kasy w Galicji; Aleksander Wielopolski – Warszawska Szkoła Główna.',
+          'Józef Hauke-Bosak – rugi pruskie; Stefan Bobrowski – Kulturkampf; Karol Marcinkowski – ukaz uwłaszczeniowy z 1864 roku.'
+        ],
+        correctIndex: 2,
+        explanation: 'Karol Marcinkowski zainicjował budowę Poznańskiego Bazaru, Franciszek Stefczyk stworzył sieć kas spółdzielczych w Galicji, a Aleksander Wielopolski doprowadził do otwarcia Warszawskiej Szkoły Głównej.'
+      }
+    ];
+
+    // Stan aplikacji
+    let activeQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let isAnswered = false;
+    let userHistory = []; // Przechowuje odpowiedzi użytkownika do podsumowania
+
+    // Elementy DOM
+    const startScreen = document.getElementById('start-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const summaryScreen = document.getElementById('summary-screen');
+
+    const startBtn = document.getElementById('start-btn');
+    const endTestBtn = document.getElementById('end-test-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const toggleReviewBtn = document.getElementById('toggle-review-btn');
+
+    const currentQNumEl = document.getElementById('current-q-num');
+    const totalQNumEl = document.getElementById('total-q-num');
+    const currentScoreEl = document.getElementById('current-score');
+    const progressBarEl = document.getElementById('progress-bar');
+    const progressWrapperEl = document.getElementById('progress-wrapper');
+
+    const questionTypeBadgeEl = document.getElementById('question-type-badge');
+    const questionTopicBadgeEl = document.getElementById('question-topic-badge');
+    const questionTextEl = document.getElementById('question-text');
+    const optionsContainerEl = document.getElementById('options-container');
+
+    const feedbackBoxEl = document.getElementById('feedback-box');
+    const feedbackIconEl = document.getElementById('feedback-icon');
+    const feedbackTitleEl = document.getElementById('feedback-title');
+    const explanationTextEl = document.getElementById('explanation-text');
+    const nextContainerEl = document.getElementById('next-container');
+    const nextBtnTextEl = document.getElementById('next-btn-text');
+
+    const summaryVerdictEl = document.getElementById('summary-verdict');
+    const summaryAnsweredEl = document.getElementById('summary-answered');
+    const summaryTotalInfoEl = document.getElementById('summary-total-info');
+    const summaryCorrectEl = document.getElementById('summary-correct');
+    const summaryWrongInfoEl = document.getElementById('summary-wrong-info');
+    const summaryPercentEl = document.getElementById('summary-percent');
+    const reviewContainerEl = document.getElementById('review-container');
+    const reviewListEl = document.getElementById('review-list');
+
+    /**
+     * Funkcja tasująca tablicę algorytmem Fishera-Yatesa (bez modyfikacji oryginału).
+     */
+    function shuffleArray(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    /**
+     * Przygotowuje zestaw pytań zgodnie z wybranym przez użytkownika trybem.
+     */
+    function prepareQuestions(mode) {
+      const cloned = QUESTIONS_BANK.map(q => ({
+        ...q,
+        options: [...q.options]
+      }));
+
+      if (mode === 'random') {
+        const shuffledQuestions = shuffleArray(cloned);
+        // W trybie losowym tasujemy również opcje w pytaniach ABCD
+        return shuffledQuestions.map(q => {
+          if (q.type === 'abcd') {
+            const correctText = q.options[q.correctIndex];
+            const shuffledOpts = shuffleArray(q.options);
+            return {
+              ...q,
+              options: shuffledOpts,
+              correctIndex: shuffledOpts.indexOf(correctText)
+            };
+          }
+          return q;
+        });
+      }
+
+      return cloned;
+    }
+
+    /**
+     * Rozpoczyna test i przełącza widok na ekran pytań.
+     */
+    function startQuiz() {
+      try {
+        const selectedModeInput = document.querySelector('input[name="order-mode"]:checked');
+        const mode = selectedModeInput ? selectedModeInput.value : 'sequential';
+
+        activeQuestions = prepareQuestions(mode);
+        currentIndex = 0;
+        score = 0;
+        isAnswered = false;
+        userHistory = [];
+
+        totalQNumEl.textContent = activeQuestions.length;
+        currentScoreEl.textContent = '0';
+
+        startScreen.classList.add('hidden');
+        summaryScreen.classList.add('hidden');
+        reviewContainerEl.classList.add('hidden');
+        quizScreen.classList.remove('hidden');
+
+        renderQuestion();
+      } catch (error) {
+        console.error('Błąd podczas uruchamiania testu:', error);
+      }
+    }
+
+    /**
+     * Renderuje bieżące pytanie oraz przyciski odpowiedzi.
+     */
+    function renderQuestion() {
+      const q = activeQuestions[currentIndex];
+      if (!q) return;
+
+      isAnswered = false;
+      const questionNumber = currentIndex + 1;
+      const total = activeQuestions.length;
+
+      // Aktualizacja licznika i paska postępu
+      currentQNumEl.textContent = questionNumber;
+      const progressPercent = Math.round((questionNumber / total) * 100);
+      progressBarEl.style.width = `${progressPercent}%`;
+      progressWrapperEl.setAttribute('aria-valuenow', progressPercent);
+
+      // Oznaczenie typu pytania
+      if (q.type === 'abcd') {
+        questionTypeBadgeEl.textContent = 'Pytanie ABCD';
+        questionTypeBadgeEl.className = 'inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-800 border border-indigo-200';
+      } else {
+        questionTypeBadgeEl.textContent = 'Prawda / Fałsz';
+        questionTypeBadgeEl.className = 'inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200';
+      }
+
+      // Kategoria tematyczna i treść
+      questionTopicBadgeEl.textContent = q.topic;
+      questionTextEl.textContent = q.question;
+
+      // Ukrycie sekcji wyjaśnienia i przycisku dalej
+      feedbackBoxEl.classList.add('hidden');
+      nextContainerEl.classList.add('hidden');
+
+      // Układ przycisków (lista pionowa dla ABCD, siatka 2-kolumnowa dla Prawda/Fałsz)
+      optionsContainerEl.innerHTML = '';
+      if (q.type === 'abcd') {
+        optionsContainerEl.className = 'grid grid-cols-1 gap-3';
+      } else {
+        optionsContainerEl.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3.5';
+      }
+
+      const letters = ['A', 'B', 'C', 'D'];
+
+      q.options.forEach((optionText, index) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.index = index;
+        btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-stone-200 bg-white hover:border-rose-400 hover:bg-stone-50 transition-all flex items-center gap-3.5 cursor-pointer group focus:outline-none focus:ring-2 focus:ring-rose-500/40';
+
+        if (q.type === 'abcd') {
+          btn.innerHTML = `
+            <span class="option-badge w-8 h-8 rounded-lg bg-stone-100 group-hover:bg-rose-100 group-hover:text-rose-800 text-slate-700 font-bold text-sm flex items-center justify-center shrink-0 transition-colors">
+              ${letters[index]}
+            </span>
+            <span class="text-sm sm:text-base font-medium text-slate-800 leading-snug">${optionText}</span>
+          `;
+        } else {
+          const isTrueOption = index === 0;
+          const iconSvg = isTrueOption
+            ? `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`
+            : `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>`;
+
+          btn.innerHTML = `
+            <span class="option-badge w-9 h-9 rounded-lg bg-stone-100 group-hover:bg-rose-100 group-hover:text-rose-800 text-slate-700 flex items-center justify-center shrink-0 transition-colors">
+              ${iconSvg}
+            </span>
+            <span class="text-base font-bold text-slate-800">${optionText}</span>
+          `;
+        }
+
+        btn.addEventListener('click', () => handleAnswer(index));
+        optionsContainerEl.appendChild(btn);
+      });
+    }
+
+    /**
+     * Obsługuje wybór odpowiedzi przez użytkownika.
+     */
+    function handleAnswer(selectedIndex) {
+      if (isAnswered) return;
+      isAnswered = true;
+
+      const q = activeQuestions[currentIndex];
+      const isCorrect = selectedIndex === q.correctIndex;
+
+      if (isCorrect) {
+        score++;
+        currentScoreEl.textContent = score;
+      }
+
+      // Zapisz odpowiedź w historii użytkownika
+      userHistory.push({
+        question: q.question,
+        topic: q.topic,
+        userAnswer: q.options[selectedIndex],
+        correctAnswer: q.options[q.correctIndex],
+        isCorrect: isCorrect,
+        explanation: q.explanation
+      });
+
+      // Aktualizacja wyglądu przycisków
+      const buttons = optionsContainerEl.querySelectorAll('.option-btn');
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        btn.classList.remove('hover:border-rose-400', 'hover:bg-stone-50', 'cursor-pointer');
+        btn.classList.add('cursor-default');
+
+        const badge = btn.querySelector('.option-badge');
+
+        if (idx === q.correctIndex) {
+          // Podświetlenie poprawnej odpowiedzi na zielono
+          btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 transition-all flex items-center gap-3.5 shadow-sm';
+          if (badge) {
+            badge.className = 'option-badge w-8 h-8 rounded-lg bg-emerald-600 text-white font-bold text-sm flex items-center justify-center shrink-0';
+          }
+        } else if (idx === selectedIndex && !isCorrect) {
+          // Podświetlenie błędnej odpowiedzi użytkownika na czerwono
+          btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 transition-all flex items-center gap-3.5 shadow-sm';
+          if (badge) {
+            badge.className = 'option-badge w-8 h-8 rounded-lg bg-rose-600 text-white font-bold text-sm flex items-center justify-center shrink-0';
+          }
+        } else {
+          // Wygaszenie pozostałych opcji
+          btn.classList.add('opacity-55');
+        }
+      });
+
+      // Wyświetlenie informacji zwrotnej i wyjaśnienia
+      feedbackBoxEl.classList.remove('hidden');
+      if (isCorrect) {
+        feedbackBoxEl.className = 'mt-6 p-4 sm:p-5 rounded-xl border border-emerald-200 bg-emerald-50/70 transition-all';
+        feedbackIconEl.innerHTML = `<svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+        feedbackTitleEl.textContent = 'Poprawna odpowiedź! (+1 pkt)';
+        feedbackTitleEl.className = 'font-bold text-base text-emerald-900';
+      } else {
+        feedbackBoxEl.className = 'mt-6 p-4 sm:p-5 rounded-xl border border-rose-200 bg-rose-50/70 transition-all';
+        feedbackIconEl.innerHTML = `<svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+        feedbackTitleEl.textContent = `Błędna odpowiedź. Prawidłowa: ${q.options[q.correctIndex]}`;
+        feedbackTitleEl.className = 'font-bold text-base text-rose-900';
+      }
+
+      explanationTextEl.textContent = q.explanation;
+
+      // Przycisk przejścia dalej
+      if (currentIndex < activeQuestions.length - 1) {
+        nextBtnTextEl.textContent = 'Następne pytanie';
+      } else {
+        nextBtnTextEl.textContent = 'Zobacz wyniki';
+      }
+      nextContainerEl.classList.remove('hidden');
+    }
+
+    /**
+     * Przechodzi do następnego pytania lub otwiera podsumowanie.
+     */
+    function goToNextQuestion() {
+      if (currentIndex < activeQuestions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        finishQuiz();
+      }
+    }
+
+    /**
+     * Kończy test (w dowolnym momencie lub po ostatnim pytaniu) i wyświetla podsumowanie.
+     */
+    function finishQuiz() {
+      const answeredCount = userHistory.length;
+      const wrongCount = answeredCount - score;
+      const percentage = answeredCount === 0 ? 0 : Math.round((score / answeredCount) * 100);
+
+      summaryAnsweredEl.textContent = answeredCount;
+      summaryTotalInfoEl.textContent = `z ${activeQuestions.length} dostępnych`;
+      summaryCorrectEl.textContent = score;
+      summaryWrongInfoEl.textContent = `Błędne: ${wrongCount}`;
+      summaryPercentEl.textContent = `${percentage}%`;
+
+      // Komunikat oceniający wynik
+      if (answeredCount === 0) {
+        summaryVerdictEl.textContent = 'Test został zakończony przed udzieleniem odpowiedzi na jakiekolwiek pytanie.';
+      } else if (percentage >= 90) {
+        summaryVerdictEl.textContent = 'Znakomity wynik! Doskonale opanowałeś materiał z historii XIX wieku.';
+      } else if (percentage >= 75) {
+        summaryVerdictEl.textContent = 'Bardzo dobry wynik! Twoja wiedza o powstaniu styczniowym i epoce postyczniowej jest na wysokim poziomie.';
+      } else if (percentage >= 50) {
+        summaryVerdictEl.textContent = 'Dobry wynik! Warto jeszcze powtórzyć kilka zagadnień z wyjaśnień poniżej.';
+      } else {
+        summaryVerdictEl.textContent = 'Warto powtórzyć materiał i spróbować ponownie – każde pytanie zawiera krótkie wyjaśnienie.';
+      }
+
+      // Przygotowanie przeglądu odpowiedzi
+      if (answeredCount > 0) {
+        toggleReviewBtn.classList.remove('hidden');
+        toggleReviewBtn.querySelector('span').textContent = 'Pokaż przegląd odpowiedzi';
+        reviewContainerEl.classList.add('hidden');
+        renderReviewList();
+      } else {
+        toggleReviewBtn.classList.add('hidden');
+        reviewContainerEl.classList.add('hidden');
+      }
+
+      quizScreen.classList.add('hidden');
+      summaryScreen.classList.remove('hidden');
+    }
+
+    /**
+     * Generuje listę wszystkich udzielonych odpowiedzi na ekranie podsumowania.
+     */
+    function renderReviewList() {
+      reviewListEl.innerHTML = '';
+      userHistory.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = item.isCorrect
+          ? 'p-4 rounded-xl border border-emerald-200 bg-emerald-50/40 text-sm'
+          : 'p-4 rounded-xl border border-rose-200 bg-rose-50/40 text-sm';
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <span class="text-xs font-bold uppercase tracking-wide text-slate-500">Pytanie ${idx + 1} • ${item.topic}</span>
+            <span class="text-xs font-bold px-2 py-0.5 rounded-full ${item.isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+              ${item.isCorrect ? 'Dobrze' : 'Błąd'}
+            </span>
+          </div>
+          <p class="font-semibold text-slate-900 mb-2">${item.question}</p>
+          <p class="text-xs sm:text-sm text-slate-700">
+            Twoja odpowiedź: <span class="font-bold ${item.isCorrect ? 'text-emerald-800' : 'text-rose-800'}">${item.userAnswer}</span>
+          </p>
+          ${!item.isCorrect ? `<p class="text-xs sm:text-sm text-emerald-800 mt-0.5">Poprawna odpowiedź: <span class="font-bold">${item.correctAnswer}</span></p>` : ''}
+        `;
+        reviewListEl.appendChild(card);
+      });
+    }
+
+    /**
+     * Wraca na ekran startowy.
+     */
+    function resetToStart() {
+      summaryScreen.classList.add('hidden');
+      quizScreen.classList.add('hidden');
+      startScreen.classList.remove('hidden');
+    }
+
+    // Rejestracja zdarzeń po załadowaniu DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      startBtn.addEventListener('click', startQuiz);
+      endTestBtn.addEventListener('click', finishQuiz);
+      nextBtn.addEventListener('click', goToNextQuestion);
+      restartBtn.addEventListener('click', resetToStart);
+
+      toggleReviewBtn.addEventListener('click', () => {
+        const isHidden = reviewContainerEl.classList.contains('hidden');
+        if (isHidden) {
+          reviewContainerEl.classList.remove('hidden');
+          toggleReviewBtn.querySelector('span').textContent = 'Ukryj przegląd odpowiedzi';
+        } else {
+          reviewContainerEl.classList.add('hidden');
+          toggleReviewBtn.querySelector('span').textContent = 'Pokaż przegląd odpowiedzi';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
